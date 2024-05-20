@@ -1,0 +1,17 @@
+[k8s]
+controller1     ansible_host=10.192.10.110    ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes    
+controller2     ansible_host=10.192.11.111  ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes
+worker1         ansible_host=10.192.10.139  ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes
+worker2         ansible_host=10.192.11.122    ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes
+controller_api_server_lb  ansible_host=10.192.11.252 ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes
+
+[controllers]
+controller1     ansible_host=10.192.10.110    ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes    
+controller2     ansible_host=10.192.11.111  ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes
+
+[workers]
+worker1         ansible_host=10.192.10.139  ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes
+worker2         ansible_host=10.192.11.122    ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes
+
+[lb]
+controller_api_server_lb  ansible_host=10.192.11.252 ansible_connection=ssh      ansible_user=ubuntu   ansible_ssh_private_key_file="~/.ssh/prod-key.pem"    ansible_become=yes

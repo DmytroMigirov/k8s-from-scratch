@@ -1,0 +1,60 @@
+- hosts: localhost
+  become: true
+  become_user: ubuntu
+  gather_facts: true
+
+  vars:
+    RELEASE: "v1.23.9"
+    CFSSL_VERSION: "1.4.1"
+
+  tasks:
+    - name: Ensure directory exists for CFSSL binaries
+      file:
+        path: /usr/local/bin
+        state: directory
+        mode: '0755'
+
+    - name: Install required packages
+      loop:
+        - golang-cfssl
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      tags:
+         - cfssl
+      become_user: root
+
+    - name: Get CFSSL version
+      shell: cfssl version
+      register: cfssl_version
+
+    - name: Show CFSSL version
+      debug:
+        msg: "{{ cfssl_version.stdout_lines }}"
+      when: cfssl_version.rc == 0
+
+    - name: Get cfssljson version
+      shell: cfssljson --help
+      register: cfssljson_version
+
+    - name: Show cfssljson version
+      debug:
+        msg: "{{ cfssljson_version.stdout_lines }}"
+      when: cfssljson_version.rc == 0
+
+    - name: Install kubectl
+      get_url:
+        url: "https://storage.googleapis.com/kubernetes-release/release/{{ RELEASE }}/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
+      become_user: root
+
+    - name: Get kubectl version
+      shell: kubectl version --client
+      register: kubectl_version
+
+    - name: Show kubectl version
+      debug:
+        msg: "{{ kubectl_version.stdout_lines }}"
+
+
